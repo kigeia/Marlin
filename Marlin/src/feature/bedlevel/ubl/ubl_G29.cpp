@@ -1432,13 +1432,11 @@
           LOOP_L_N(iy, g29_grid_size) {
             rpos.y = y_min + dy * (zig_zag ? g29_grid_size - 1 - iy : iy);
 
-            if (!abort_flag) {
+            
               SERIAL_ECHOLNPAIR("Tilting mesh point ", point_num, "/", total_points, "\n");
               TERN_(HAS_DISPLAY, ui.status_printf_P(0, PSTR(S_FMT " %i/%i"), GET_TEXT(MSG_LCD_TILTING_MESH), point_num, total_points));
 
               measured_z = probe.probe_at_point(rpos, parser.seen('E') ? PROBE_PT_STOW : PROBE_PT_RAISE, g29_verbose_level); // TODO: Needs error handling
-
-              abort_flag = isnan(measured_z);
 
               #if ENABLED(DEBUG_LEVELING_FEATURE)
                 if (DEBUGGING(LEVELING)) {
@@ -1463,8 +1461,10 @@
                 serial_spaces(16);
                 SERIAL_ECHOLNPAIR("Corrected_Z=", measured_z);
               }
-              incremental_LSF(&lsf_results, rpos, measured_z);
-            }
+              if (!isnan(measured_z)) {
+		incremental_LSF(&lsf_results, rpos, measured_z);
+	      }
+            
 
             point_num++;
           }
@@ -1475,7 +1475,7 @@
       probe.stow();
       probe.move_z_after_probing();
 
-      if (abort_flag || finish_incremental_LSF(&lsf_results)) {
+      if (finish_incremental_LSF(&lsf_results)) {
         SERIAL_ECHOPGM("Could not complete LSF!");
         return;
       }
