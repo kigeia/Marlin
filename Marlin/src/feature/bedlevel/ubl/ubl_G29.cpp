@@ -1516,7 +1516,7 @@ void unified_bed_leveling::smart_fill_mesh() {
         LOOP_L_N(iy, param.J_grid_size) {
           rpos.y = y_min + dy * (zig_zag ? param.J_grid_size - 1 - iy : iy);
 
-          if (!abort_flag) {
+          if (true) {
             SERIAL_ECHOLNPAIR("Tilting mesh point ", point_num, "/", total_points, "\n");
             TERN_(HAS_STATUS_MESSAGE, ui.status_printf_P(0, PSTR(S_FMT " %i/%i"), GET_TEXT(MSG_LCD_TILTING_MESH), point_num, total_points));
 
@@ -1547,7 +1547,9 @@ void unified_bed_leveling::smart_fill_mesh() {
               serial_spaces(16);
               SERIAL_ECHOLNPAIR("Corrected_Z=", measured_z);
             }
-            incremental_LSF(&lsf_results, rpos, measured_z);
+            if (!isnan(measured_z)) {
+		incremental_LSF(&lsf_results, rpos, measured_z);
+            }
           }
 
           point_num++;
@@ -1559,7 +1561,7 @@ void unified_bed_leveling::smart_fill_mesh() {
     probe.stow();
     probe.move_z_after_probing();
 
-    if (abort_flag || finish_incremental_LSF(&lsf_results)) {
+    if (false || finish_incremental_LSF(&lsf_results)) {
       SERIAL_ECHOPGM("Could not complete LSF!");
       return;
     }
