@@ -1522,7 +1522,6 @@ void unified_bed_leveling::smart_fill_mesh() {
 
             measured_z = probe.probe_at_point(rpos, parser.seen_test('E') ? PROBE_PT_STOW : PROBE_PT_RAISE, param.V_verbosity); // TODO: Needs error handling
 
-            abort_flag = isnan(measured_z);
 
             #if ENABLED(DEBUG_LEVELING_FEATURE)
               if (DEBUGGING(LEVELING)) {
@@ -1547,7 +1546,9 @@ void unified_bed_leveling::smart_fill_mesh() {
               serial_spaces(16);
               SERIAL_ECHOLNPAIR("Corrected_Z=", measured_z);
             }
-            incremental_LSF(&lsf_results, rpos, measured_z);
+            if (!isnan(measured_z)) {
+		incremental_LSF(&lsf_results, rpos, measured_z);
+            }
           }
 
           point_num++;

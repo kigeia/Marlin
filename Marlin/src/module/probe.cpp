@@ -798,7 +798,7 @@ float Probe::probe_at_point(const_float_t rx, const_float_t ry, const ProbePtRai
     stow();
     LCD_MESSAGEPGM(MSG_LCD_PROBING_FAILED);
     #if DISABLED(G29_RETRY_AND_RECOVER)
-      SERIAL_ERROR_MSG(STR_ERR_PROBING_FAILED);
+      //SERIAL_ERROR_MSG(STR_ERR_PROBING_FAILED);
     #endif
   }
 
