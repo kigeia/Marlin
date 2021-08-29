@@ -204,7 +204,7 @@ public:
           { 0 }
         #endif
       ;
-      static constexpr xy_pos_t default_probe_xy_offset = { default_probe_xyz_offset.x,  default_probe_xyz_offset.y };
+      static constexpr xy_pos_t default_probe_xy_offset = xy_pos_t({ default_probe_xyz_offset.x,  default_probe_xyz_offset.y });
 
     public:
       static constexpr bool can_reach(float x, float y) {
