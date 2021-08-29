@@ -102,6 +102,7 @@
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
+#define SERIAL_PORT 2
 
 /**
  * Serial Port Baud Rate
@@ -114,7 +115,6 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define SERIAL_PORT 2
 #define BAUDRATE 250000
 //#define BAUD_RATE_GCODE     // Enable G-code M575 to set the baud rate
 
@@ -123,7 +123,7 @@
  * Currently Ethernet (-2) is only supported on Teensy 4.1 boards.
  * :[-2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-#define SERIAL_PORT_2 -1
+//#define SERIAL_PORT_2 -1
 //#define BAUDRATE_2 250000   // Enable to override BAUDRATE
 
 /**
@@ -163,6 +163,7 @@
  *
  * :[3, 4, 5, 6]
  */
+#define LINEAR_AXES 3
 
 /**
  * Axis codes for additional axes:
@@ -177,7 +178,6 @@
  * Regardless of the settings, firmware-internal axis IDs are
  * I (AXIS4), J (AXIS5), K (AXIS6).
  */
-#define LINEAR_AXES 3
 #if LINEAR_AXES >= 4
   #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
 #endif
@@ -514,9 +514,9 @@
 #define TEMP_BED_WINDOW             10  // (°C) Temperature proximity for the "temperature reached" timer
 #define TEMP_BED_HYSTERESIS         10  // (°C) Temperature proximity considered "close enough" to the target
 
-#define TEMP_CHAMBER_RESIDENCY_TIME  3  // (seconds) Time to wait for chamber to "settle" in M191
-#define TEMP_CHAMBER_WINDOW         10  // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_CHAMBER_HYSTERESIS     10  // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_CHAMBER_RESIDENCY_TIME 10  // (seconds) Time to wait for chamber to "settle" in M191
+#define TEMP_CHAMBER_WINDOW          1  // (°C) Temperature proximity for the "temperature reached" timer
+#define TEMP_CHAMBER_HYSTERESIS      3  // (°C) Temperature proximity considered "close enough" to the target
 
 /**
  * Redundant Temperature Sensor (TEMP_SENSOR_REDUNDANT)
@@ -542,7 +542,7 @@
 
 // Below this temperature the heater will be switched off
 // because it probably indicates a broken thermistor wire.
-#define HEATER_0_MINTEMP   -1
+#define HEATER_0_MINTEMP   5
 #define HEATER_1_MINTEMP   5
 #define HEATER_2_MINTEMP   5
 #define HEATER_3_MINTEMP   5
@@ -550,13 +550,13 @@
 #define HEATER_5_MINTEMP   5
 #define HEATER_6_MINTEMP   5
 #define HEATER_7_MINTEMP   5
-#define BED_MINTEMP        -1
+#define BED_MINTEMP        5
 #define CHAMBER_MINTEMP    5
 
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 320
+#define HEATER_0_MAXTEMP 275
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -564,7 +564,7 @@
 #define HEATER_5_MAXTEMP 275
 #define HEATER_6_MAXTEMP 275
 #define HEATER_7_MAXTEMP 275
-#define BED_MAXTEMP      70
+#define BED_MAXTEMP      150
 #define CHAMBER_MAXTEMP  60
 
 /**
@@ -1311,9 +1311,9 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR true
-#define INVERT_Y_DIR false
-#define INVERT_Z_DIR true
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR true
+#define INVERT_Z_DIR false
 //#define INVERT_I_DIR false
 //#define INVERT_J_DIR false
 //#define INVERT_K_DIR false
@@ -1368,7 +1368,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 204
+#define Z_MAX_POS 200
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
